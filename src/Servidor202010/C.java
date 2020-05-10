@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.security.KeyPair;
 import java.security.Security;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class C {
@@ -17,12 +19,16 @@ public class C {
 	private static final String MAESTRO = "MAESTRO: ";
 	private static X509Certificate certSer; /* acceso default */
 	private static KeyPair keyPairServidor; /* acceso default */
-	
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
+
+
+
+
 
 		System.out.println(MAESTRO + "Establezca puerto de conexion:");
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -37,26 +43,38 @@ public class C {
 		keyPairServidor = S.grsa();
 		certSer = S.gc(keyPairServidor); 
 		String ruta = "./resultados.txt";
-		   
-        file = new File(ruta);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        FileWriter fw = new FileWriter(file);
-        fw.close();
 
-        D.init(certSer, keyPairServidor,file);
-        
+		file = new File(ruta);
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		FileWriter fw = new FileWriter(file);
+		fw.close();
+
+		D.init(certSer, keyPairServidor,file);
+
 		// Crea el socket que escucha en el puerto seleccionado.
 		ss = new ServerSocket(ip);
 		System.out.println(MAESTRO + "Socket creado.");
-        
-		for (int i=0;true;i++) {
+
+		int numeroThreads = 0;
+
+		ExecutorService es = Executors.newFixedThreadPool(1);
+
+
+		System.out.println("Ingresar el número de peticiones que se van a realizar");
+		int peticiones = Integer.parseInt(br.readLine());
+
+		while(peticiones > 0) {
 			try { 
 				Socket sc = ss.accept();
-				System.out.println(MAESTRO + "Cliente " + i + " aceptado.");
-				D d = new D(sc,i);
-				d.start();
+				System.out.println(MAESTRO + "Cliente " + numeroThreads + " aceptado.");
+				
+				es.execute(new D(sc,numeroThreads));
+				
+				peticiones--;
+				numeroThreads++;
+				
 			} catch (IOException e) {
 				System.out.println(MAESTRO + "Error creando el socket cliente.");
 				e.printStackTrace();
