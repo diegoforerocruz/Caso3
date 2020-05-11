@@ -13,6 +13,8 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 
 public class C {
 	private static ServerSocket ss;	
@@ -24,19 +26,13 @@ public class C {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
-		// TODO Auto-generated method stub
-
-
-
-
-
 		System.out.println(MAESTRO + "Establezca puerto de conexion:");
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		int ip = Integer.parseInt(br.readLine());
 		System.out.println(MAESTRO + "Empezando servidor maestro en puerto " + ip);
 		// Adiciona la libreria como un proveedor de seguridad.
-		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());		
+		Security.addProvider(new BouncyCastleProvider());		
 
 		// Crea el archivo de log
 		File file = null;
@@ -55,26 +51,19 @@ public class C {
 
 		// Crea el socket que escucha en el puerto seleccionado.
 		ss = new ServerSocket(ip);
-		System.out.println(MAESTRO + "Socket creado.");
+		System.out.println("MAESTRO: Socket creado.");
 
-		int numeroThreads = 0;
-
-		ExecutorService es = Executors.newFixedThreadPool(1);
-
-
-		System.out.println("Ingresar el número de peticiones que se van a realizar");
+		System.out.println("Ingresar el número de Threads que va a tener el Pool:");
 		int peticiones = Integer.parseInt(br.readLine());
 
-		while(peticiones > 0) {
+		ExecutorService pool = Executors.newFixedThreadPool(peticiones);
+
+		for (int i=0;true;i++) {
 			try { 
 				Socket sc = ss.accept();
-				System.out.println(MAESTRO + "Cliente " + numeroThreads + " aceptado.");
-				
-				es.execute(new D(sc,numeroThreads));
-				
-				peticiones--;
-				numeroThreads++;
-				
+				System.out.println(MAESTRO + "Cliente " + i + " aceptado.");
+				pool.execute(new ServidorSinSeguridad.D(sc,i));
+
 			} catch (IOException e) {
 				System.out.println(MAESTRO + "Error creando el socket cliente.");
 				e.printStackTrace();

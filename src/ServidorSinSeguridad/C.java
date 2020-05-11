@@ -16,9 +16,6 @@ import java.util.concurrent.Executors;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import Servidor202010.D;
-import Servidor202010.S;
-
 public class C {
 	private static ServerSocket ss;
 
@@ -35,13 +32,9 @@ public class C {
 		int ip = Integer.parseInt(br.readLine());
 		System.out.println("MAESTRO: Empezando servidor maestro en puerto " + ip);
 		Security.addProvider((Provider)new BouncyCastleProvider());
-		keyPairServidor = S.grsa();
-		certSer = S.gc(keyPairServidor);
-
-		// Crea el archivo de log
 		File file = null;
 		keyPairServidor = S.grsa();
-		certSer = S.gc(keyPairServidor); 
+		certSer = S.gc(keyPairServidor);
 		String ruta = "./resultados.txt";
 
 		file = new File(ruta);
@@ -50,33 +43,25 @@ public class C {
 		}
 		FileWriter fw = new FileWriter(file);
 		fw.close();
-
-		D.init(certSer, keyPairServidor, file);
+		D.init(certSer, keyPairServidor,file);
 		ss = new ServerSocket(ip);
 		System.out.println("MAESTRO: Socket creado.");
 
-
-		int numeroThreads = 0;
-
-		ExecutorService es = Executors.newFixedThreadPool(1);
-
-
-		System.out.println("Ingresar el número de peticiones que se van a realizar");
+		System.out.println("Ingresar el número de Threads que va a tener el Pool:");
 		int peticiones = Integer.parseInt(br.readLine());
 
-		while(peticiones > 0) {
+		ExecutorService pool = Executors.newFixedThreadPool(peticiones);
+
+		for (int i=0;true;i++) {
 			try { 
 				Socket sc = ss.accept();
-				System.out.println(MAESTRO + "Cliente " + numeroThreads + " aceptado.");
+				System.out.println(MAESTRO + "Cliente " + i + " aceptado.");
+				pool.execute(new ServidorSinSeguridad.D(sc,i));
 
-				es.execute(new D(sc,numeroThreads));
-
-				peticiones--;
-				numeroThreads++;
 			} catch (IOException e) {
-				System.out.println("MAESTRO: Error creando el socket cliente.");
+				System.out.println(MAESTRO + "Error creando el socket cliente.");
 				e.printStackTrace();
-			} 
-		} 
+			}
+		}
 	}
 }
