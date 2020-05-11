@@ -1,12 +1,14 @@
 package ServidorSinSeguridad;
 
 import java.io.BufferedReader;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.management.ManagementFactory;
 import java.net.Socket;
 import java.security.KeyPair;
 import java.security.cert.CertificateFactory;
@@ -14,6 +16,7 @@ import java.security.cert.X509Certificate;
 import java.util.Calendar;
 import java.util.Random;
 import javax.crypto.SecretKey;
+import javax.management.*;
 import javax.xml.bind.DatatypeConverter;
 
 import Servidor202010.S;
@@ -35,7 +38,7 @@ public class D implements Runnable {
   private static X509Certificate certSer;
   private static KeyPair keyPairServidor;
   private static File file;
-  public static final int numCadenas = 13;
+  public static final int numCadenas = 15;
   public static void init(X509Certificate pCertSer, KeyPair pKeyPairServidor, File pFile) {
     certSer = pCertSer;
     keyPairServidor = pKeyPairServidor;
@@ -133,7 +136,8 @@ public class D implements Runnable {
 		ac.println(OK);
 		cadenas[2] = dlg + ENVIO + OK + "-continuando.";
 		System.out.println(cadenas[2]);
-		/***** Fase 3: Recibe certificado del cliente *****/				
+		/***** Fase 3: Recibe certificado del cliente *****/
+		long tiempoInicial = System.currentTimeMillis();
 		String strCertificadoCliente = dc.readLine();
 		byte[] certificadoClienteBytes = new byte[520];
 		certificadoClienteBytes = toByteArray(strCertificadoCliente);
@@ -225,8 +229,11 @@ public class D implements Runnable {
 			cadenas[12] = dlg + REC + linea + "-Terminando con error";
 	        System.out.println(cadenas[12]);
 		}
+		Long tiempoFinal = System.currentTimeMillis();
         sc.close();
-        
+        Long tiempoResultado= tiempoFinal-tiempoInicial;
+        cadenas[13]=tiempoResultado+" milisegundos";
+        cadenas[14]=getProcessCpuLoad()+ " porcentaje de uso de CPU";
 	    for (int i=0;i<numCadenas;i++) {
 		    escribirMensaje(cadenas[i]);
 	    }
@@ -242,6 +249,22 @@ return DatatypeConverter.printBase64Binary(array);
 
 public static byte[] toByteArray(String s) {
 return DatatypeConverter.parseBase64Binary(s);
+}
+public static double getProcessCpuLoad() throws Exception {
+
+    MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
+    ObjectName name    = ObjectName.getInstance("java.lang:type=OperatingSystem");
+    AttributeList list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
+
+    if (list.isEmpty())     return Double.NaN;
+
+    Attribute att = (Attribute)list.get(0);
+    Double value  = (Double)att.getValue();
+
+    // usually takes a couple of seconds before we get real values
+    if (value == -1.0)      return Double.NaN;
+    // returns a percentage value with 1 decimal point precision
+    return ((int)(value * 1000) / 10.0);
 }
 
 }
