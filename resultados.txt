@@ -6,8 +6,21 @@ delegado 0: envio-OK-continuando.
 delegado 0: envio- certificado del servidor. continuando.
 delegado 0: recibio-OK-continuando.
 delegado 0: envio-llave K_SC al cliente. continuado.
-delegado 0: envio-3150-reto al cliente. continuando 
-delegado 0: recibio-3150-reto correcto. continuado.
-delegado 0: recibio-1234-continuando
-delegado 0: envio-2215-cifrado con K_SC. continuado.
+delegado 0: envio-2050-reto al cliente. continuando 
+delegado 0: recibio-2050-reto correcto. continuado.
+delegado 0: recibio-7898-continuando
+delegado 0: envio-2223-cifrado con K_SC. continuado.
 delegado 0: recibio-OK-Terminando exitosamente.
+delegado 1: recibio-HOLA-continuando.
+delegado 1: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 1: envio-OK-continuando.
+delegado 1: recibio-certificado del cliente. continuando.
+delegado 1: envio-OK-continuando.
+delegado 1: envio- certificado del servidor. continuando.
+delegado 1: recibio-OK-continuando.
+delegado 1: envio-llave K_SC al cliente. continuado.
+delegado 1: envio-5530-reto al cliente. continuando 
+delegado 1: recibio-5530-reto correcto. continuado.
+delegado 1: recibio-1234-continuando
+delegado 1: envio-2223-cifrado con K_SC. continuado.
+delegado 1: recibio-OK-Terminando exitosamente.

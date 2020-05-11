@@ -69,7 +69,7 @@ public class D implements Runnable {
 	 * - Debe conservar el metodo . 
 	 * - Es el Ãºnico metodo permitido para escribir en el log.
 	 */
-	private void escribirMensaje(String pCadena) {
+	private synchronized void escribirMensaje(String pCadena) {
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
