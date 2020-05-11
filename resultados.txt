@@ -1,3 +1,41 @@
+delegado 1: recibio-HOLA-continuando.
+delegado 1: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 1: envio-OK-continuando.
+delegado 1: recibio-certificado del cliente. continuando.
+delegado 1: envio-OK-continuando.
+delegado 1: envio- certificado del servidor. continuando.
+delegado 1: recibio-OK-continuando.
+delegado 1: envio-llave K_SC al cliente. continuado.
+delegado 1: envio-8700-reto al cliente. continuando 
+delegado 1: recibio-8700-reto correcto. continuado.
+delegado 1: recibio-1111-continuando
+delegado 1: envio-1048-cifrado con K_SC. continuado.
+delegado 1: recibio-OK-Terminando exitosamente.
+2640 milisegundos
+24.8 porcentaje de uso de CPU
+delegado 2: recibio-HOLA-continuando.
+delegado 2: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 2: envio-OK-continuando.
+delegado 2: recibio-certificado del cliente. continuando.
+delegado 2: envio-OK-continuando.
+delegado 2: envio- certificado del servidor. continuando.
+delegado 2: recibio-OK-continuando.
+delegado 2: envio-llave K_SC al cliente. continuado.
+delegado 4: recibio-HOLA-continuando.
+delegado 4: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 4: envio-OK-continuando.
+delegado 4: recibio-certificado del cliente. continuando.
+delegado 4: envio-OK-continuando.
+delegado 4: envio- certificado del servidor. continuando.
+delegado 4: recibio-OK-continuando.
+delegado 4: envio-llave K_SC al cliente. continuado.
+delegado 4: envio-5670-reto al cliente. continuando 
+delegado 4: recibio-5670-reto correcto. continuado.
+delegado 4: recibio-1111-continuando
+delegado 4: envio-1048-cifrado con K_SC. continuado.
+delegado 4: recibio-OK-Terminando exitosamente.
+344 milisegundos
+24.8 porcentaje de uso de CPU
 delegado 0: recibio-HOLA-continuando.
 delegado 0: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
 delegado 0: envio-OK-continuando.
@@ -6,10 +44,107 @@ delegado 0: envio-OK-continuando.
 delegado 0: envio- certificado del servidor. continuando.
 delegado 0: recibio-OK-continuando.
 delegado 0: envio-llave K_SC al cliente. continuado.
-delegado 0: envio-8000-reto al cliente. continuando 
-delegado 0: recibio-8000-reto correcto. continuado.
-delegado 0: recibio-2345-continuando
-delegado 0: envio-2256-cifrado con K_SC. continuado.
+delegado 0: envio-7920-reto al cliente. continuando 
+delegado 0: recibio-7920-reto correcto. continuado.
+delegado 0: recibio-1111-continuando
+delegado 0: envio-1048-cifrado con K_SC. continuado.
 delegado 0: recibio-OK-Terminando exitosamente.
-10018 milisegundos
-23.6 porcentaje de uso de CPU
+2645 milisegundos
+24.8 porcentaje de uso de CPU
+delegado 3: recibio-HOLA-continuando.
+delegado 3: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 3: envio-OK-continuando.
+delegado 3: recibio-certificado del cliente. continuando.
+delegado 3: envio-OK-continuando.
+delegado 3: envio- certificado del servidor. continuando.
+delegado 3: recibio-OK-continuando.
+delegado 3: envio-llave K_SC al cliente. continuado.
+delegado 3: envio-3570-reto al cliente. continuando 
+delegado 3: recibio-3570-reto correcto. continuado.
+delegado 3: recibio-1111-continuando
+delegado 3: envio-1048-cifrado con K_SC. continuado.
+delegado 3: recibio-OK-Terminando exitosamente.
+736 milisegundos
+24.8 porcentaje de uso de CPU
+delegado 2: envio-8850-reto al cliente. continuando 
+delegado 2: recibio-8850-reto correcto. continuado.
+delegado 2: recibio-1111-continuando
+delegado 2: envio-1048-cifrado con K_SC. continuado.
+delegado 2: recibio-OK-Terminando exitosamente.
+1680 milisegundos
+24.8 porcentaje de uso de CPU
+delegado 5: recibio-HOLA-continuando.
+delegado 5: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 5: envio-OK-continuando.
+delegado 5: recibio-certificado del cliente. continuando.
+delegado 5: envio-OK-continuando.
+delegado 5: envio- certificado del servidor. continuando.
+delegado 6: recibio-HOLA-continuando.
+delegado 6: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 6: envio-OK-continuando.
+delegado 6: recibio-certificado del cliente. continuando.
+delegado 6: envio-OK-continuando.
+delegado 6: envio- certificado del servidor. continuando.
+delegado 6: recibio-OK-continuando.
+delegado 6: envio-llave K_SC al cliente. continuado.
+delegado 6: envio-4620-reto al cliente. continuando 
+delegado 6: recibio-4620-reto correcto. continuado.
+delegado 6: recibio-1111-continuando
+delegado 6: envio-1048-cifrado con K_SC. continuado.
+delegado 6: recibio-OK-Terminando exitosamente.
+526 milisegundos
+20.1 porcentaje de uso de CPU
+delegado 7: recibio-HOLA-continuando.
+delegado 7: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 7: envio-OK-continuando.
+delegado 7: recibio-certificado del cliente. continuando.
+delegado 7: envio-OK-continuando.
+delegado 7: envio- certificado del servidor. continuando.
+delegado 7: recibio-OK-continuando.
+delegado 7: envio-llave K_SC al cliente. continuado.
+delegado 5: recibio-OK-continuando.
+delegado 5: envio-llave K_SC al cliente. continuado.
+delegado 5: envio-7270-reto al cliente. continuando 
+delegado 5: recibio-7270-reto correcto. continuado.
+delegado 5: recibio-1111-continuando
+delegado 5: envio-1048-cifrado con K_SC. continuado.
+delegado 5: recibio-OK-Terminando exitosamente.
+459 milisegundos
+20.1 porcentaje de uso de CPU
+delegado 7: envio-3330-reto al cliente. continuando 
+delegado 7: recibio-3330-reto correcto. continuado.
+delegado 7: recibio-1111-continuando
+delegado 7: envio-1048-cifrado con K_SC. continuado.
+delegado 7: recibio-OK-Terminando exitosamente.
+373 milisegundos
+20.1 porcentaje de uso de CPU
+delegado 8: recibio-HOLA-continuando.
+delegado 8: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 8: envio-OK-continuando.
+delegado 8: recibio-certificado del cliente. continuando.
+delegado 8: envio-OK-continuando.
+delegado 8: envio- certificado del servidor. continuando.
+delegado 8: recibio-OK-continuando.
+delegado 8: envio-llave K_SC al cliente. continuado.
+delegado 8: envio-2620-reto al cliente. continuando 
+delegado 8: recibio-2620-reto correcto. continuado.
+delegado 8: recibio-1111-continuando
+delegado 8: envio-1048-cifrado con K_SC. continuado.
+delegado 8: recibio-OK-Terminando exitosamente.
+349 milisegundos
+20.1 porcentaje de uso de CPU
+delegado 9: recibio-HOLA-continuando.
+delegado 9: recibio-ALGORITMOS:AES:RSA:HMACSHA1-continuando.
+delegado 9: envio-OK-continuando.
+delegado 9: recibio-certificado del cliente. continuando.
+delegado 9: envio-OK-continuando.
+delegado 9: envio- certificado del servidor. continuando.
+delegado 9: recibio-OK-continuando.
+delegado 9: envio-llave K_SC al cliente. continuado.
+delegado 9: envio-2840-reto al cliente. continuando 
+delegado 9: recibio-2840-reto correcto. continuado.
+delegado 9: recibio-1111-continuando
+delegado 9: envio-1048-cifrado con K_SC. continuado.
+delegado 9: recibio-OK-Terminando exitosamente.
+124 milisegundos
+7.0 porcentaje de uso de CPU

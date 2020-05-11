@@ -62,7 +62,7 @@ public class C {
 			try { 
 				Socket sc = ss.accept();
 				System.out.println(MAESTRO + "Cliente " + i + " aceptado.");
-				pool.execute(new ServidorSinSeguridad.D(sc,i));
+				pool.execute(new Servidor202010.D(sc,i));
 
 			} catch (IOException e) {
 				System.out.println(MAESTRO + "Error creando el socket cliente.");
