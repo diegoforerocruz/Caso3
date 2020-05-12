@@ -43,7 +43,13 @@ public class C {
 		}
 		FileWriter fw = new FileWriter(file);
 		fw.close();
-		D.init(certSer, keyPairServidor,file);
+		File file2 = new File("./tiempoDeEjecucion.txt");
+		if (!file2.exists()) {
+			file2.createNewFile();
+		}
+		FileWriter fw2 = new FileWriter(file2);
+		fw2.close();
+		D.init(certSer, keyPairServidor,file, file2);
 		ss = new ServerSocket(ip);
 		System.out.println("MAESTRO: Socket creado.");
 

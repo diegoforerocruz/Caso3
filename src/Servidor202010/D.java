@@ -14,6 +14,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.Timer;
 
 import javax.crypto.SecretKey;
 import javax.management.Attribute;
@@ -21,6 +22,8 @@ import javax.management.AttributeList;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.xml.bind.DatatypeConverter;
+
+import monitores.Monitor;
 
 public class D extends Thread {
 
@@ -42,13 +45,15 @@ public class D extends Thread {
 	private static X509Certificate certSer;
 	private static KeyPair keyPairServidor;
 	private static File file;
-	public static final int numCadenas = 15;
+	private static File file2;
+	public static final int numCadenas = 13;
 
 	
-	public static void init(X509Certificate pCertSer, KeyPair pKeyPairServidor, File pFile) {
+	public static void init(X509Certificate pCertSer, KeyPair pKeyPairServidor, File pFile, File pFile2) {
 		certSer = pCertSer;
 		keyPairServidor = pKeyPairServidor;
 		file = pFile;
+		file2= pFile2;
 	}
 	
 	public D (Socket csP, int idP) {
@@ -84,6 +89,7 @@ public class D extends Thread {
 			FileWriter fw = new FileWriter(file,true);
 			fw.write(pCadena + "\n");
 			fw.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,7 +99,8 @@ public class D extends Thread {
 	public void run() {
 		String[] cadenas;
 		cadenas = new String[numCadenas];
-
+		Timer timer = new Timer();
+		timer.schedule(new Monitor(),(long) 10,(long) 10);
 		String feedback;
 		String linea;
 	    System.out.println(dlg + "Empezando atencion.");
@@ -246,8 +253,8 @@ public class D extends Thread {
 				Long tiempoFinal = System.currentTimeMillis();
 		        sc.close();
 		        Long tiempoResultado= tiempoFinal-tiempoInicial;
-		        cadenas[13]=tiempoResultado+" milisegundos";
-		        cadenas[14]=getProcessCpuLoad()+ " porcentaje de uso de CPU";
+		        logTiempoTransaccion(tiempoResultado);
+		       
 			    for (int i=0;i<numCadenas;i++) {
 				    escribirMensaje(cadenas[i]);
 			    }
@@ -255,6 +262,18 @@ public class D extends Thread {
 	        } catch (Exception e) {
 	          e.printStackTrace();
 	        }
+	}
+	private static synchronized void logTiempoTransaccion(long tiempoResultado) {
+		
+		try {
+			
+			FileWriter fw2 = new FileWriter(file2,true);
+			fw2.write(tiempoResultado + "\n");
+			fw2.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public static String toHexString(byte[] array) {
@@ -264,23 +283,6 @@ public class D extends Thread {
 	public static byte[] toByteArray(String s) {
 	    return DatatypeConverter.parseBase64Binary(s);
 	}
-	public static double getProcessCpuLoad() throws Exception {
-
-	    MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
-	    ObjectName name    = ObjectName.getInstance("java.lang:type=OperatingSystem");
-	    AttributeList list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
-
-	    if (list.isEmpty())     return Double.NaN;
-
-	    Attribute att = (Attribute)list.get(0);
-	    Double value  = (Double)att.getValue();
-
-	    // usually takes a couple of seconds before we get real values
-	    if (value == -1.0)      return Double.NaN;
-	    // returns a percentage value with 1 decimal point precision
-	    return ((int)(value * 1000) / 10.0);
-	}
-
 	
 	
 }
