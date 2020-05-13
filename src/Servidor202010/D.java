@@ -27,46 +27,42 @@ import monitores.Monitor;
 
 public class D extends Thread {
 
-	public static final String OK = "OK";
-	public static final String ALGORITMOS = "ALGORITMOS";
-	public static final String CERTSRV = "CERTSRV";
-	public static final String CERCLNT = "CERCLNT";
-	public static final String SEPARADOR = ":";
-	public static final String HOLA = "HOLA";
-	public static final String INICIO = "INICIO";
-	public static final String ERROR = "ERROR";
-	public static final String REC = "recibio-";
-	public static final String ENVIO = "envio-";
-
-	// Atributos
-	private Socket sc = null;
-	private String dlg;
-	private byte[] mybyte;
-	private static X509Certificate certSer;
-	private static KeyPair keyPairServidor;
-	private static File file;
-	private static File file2;
-	public static final int numCadenas = 13;
-
+	 public static final String OK = "OK";
+	  public static final String ALGORITMOS = "ALGORITMOS";
+	  public static final String CERTSRV = "CERTSRV";
+	  public static final String CERCLNT = "CERCLNT";
+	  public static final String SEPARADOR = ":";
+	  public static final String HOLA = "HOLA";
+	  public static final String INICIO = "INICIO";
+	  public static final String ERROR = "ERROR";
+	  public static final String REC = "recibio-";
+	  public static final String ENVIO = "envio-";
+	  private Socket sc = null;
+	  private String dlg;
+	  private byte[] mybyte;
+	  private static X509Certificate certSer;
+	  private static KeyPair keyPairServidor;
+	  private static File file;
+	  private static File file2;
+	  public static final int numCadenas = 13;
+	  public static void init(X509Certificate pCertSer, KeyPair pKeyPairServidor, File pFile, File pFile2) {
+	    certSer = pCertSer;
+	    keyPairServidor = pKeyPairServidor;
+	    file = pFile;
+	    file2 = pFile2;
+	  }
 	
-	public static void init(X509Certificate pCertSer, KeyPair pKeyPairServidor, File pFile, File pFile2) {
-		certSer = pCertSer;
-		keyPairServidor = pKeyPairServidor;
-		file = pFile;
-		file2= pFile2;
-	}
-	
-	public D (Socket csP, int idP) {
-		sc = csP;
-		dlg = new String("delegado " + idP + ": ");
-		try {
-		mybyte = new byte[520]; 
-		mybyte = certSer.getEncoded();
-		} catch (Exception e) {
-			System.out.println("Error creando el thread" + dlg);
-			e.printStackTrace();
-		}
-	}
+	  public D (Socket csP, int idP) {
+		    sc = csP;
+		    dlg = new String("delegado " + idP + ": ");
+		    try {
+		      mybyte = new byte[520];
+		      mybyte = certSer.getEncoded();
+		    } catch (Exception e) {
+		      System.out.println("Error creando el thread" + dlg);
+		      e.printStackTrace();
+		    } 
+		  }
 	
 	private boolean validoAlgHMAC(String nombre) {
 		return ((nombre.equals(S.HMACMD5) || 
@@ -83,7 +79,7 @@ public class D extends Thread {
 	 * - Debe conservar el metodo . 
 	 * - Es el Ãºnico metodo permitido para escribir en el log.
 	 */
-	private void escribirMensaje(String pCadena) {
+	private synchronized void escribirMensaje(String pCadena) {
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
@@ -120,7 +116,6 @@ public class D extends Thread {
 					cadenas[0] = dlg + REC + linea + "-continuando.";
 					System.out.println(cadenas[0]);
 				}
-				
 				/***** Fase 2:  *****/
 				linea = dc.readLine();
 				if (!(linea.contains(SEPARADOR) && linea.split(SEPARADOR)[0].equals(ALGORITMOS))) {
@@ -151,8 +146,6 @@ public class D extends Thread {
 				ac.println(OK);
 				cadenas[2] = dlg + ENVIO + OK + "-continuando.";
 				System.out.println(cadenas[2]);
-
-				
 				/***** Fase 3: Recibe certificado del cliente *****/
 				long tiempoInicial = System.currentTimeMillis();
 				String strCertificadoCliente = dc.readLine();
@@ -166,7 +159,6 @@ public class D extends Thread {
 				ac.println(OK);
 				cadenas[4] = dlg + ENVIO + OK + "-continuando.";
 				System.out.println(cadenas[4]);
-				
 				/***** Fase 4: Envia certificado del servidor *****/
 				String strSerCert = toHexString(mybyte);
 				ac.println(strSerCert);
@@ -188,7 +180,6 @@ public class D extends Thread {
 				ac.println(toHexString(ciphertext1));
 				cadenas[7] = dlg +  ENVIO + "llave K_SC al cliente. continuado.";
 				System.out.println(cadenas[7]);
-				
 				/***** Fase 5: Envia reto *****/
 				Random rand = new Random(); 
 				int intReto = rand.nextInt(999);
@@ -197,7 +188,7 @@ public class D extends Thread {
 
 				String reto = strReto;
 				byte[] bytereto = toByteArray(reto);
-				byte [] cipherreto = S.se(bytereto, simetrica, algoritmos[1]);
+		        byte[] cipherreto = S.se(bytereto, simetrica, algoritmos[1]);
 				ac.println(toHexString(cipherreto));
 				cadenas[8] = dlg + ENVIO + reto + "-reto al cliente. continuando ";
 				System.out.println(cadenas[8]);
@@ -217,15 +208,13 @@ public class D extends Thread {
 				    sc.close();
 					throw new Exception(dlg + REC + strdelcliente + "-ERROR en reto. terminando");
 				}
-								
 				/***** Fase 7: Recibe identificador de usuario *****/
 				linea = dc.readLine();
 				byte[] retoByte = toByteArray(linea);
-				byte [ ] ciphertext2 = S.sd(retoByte, simetrica, algoritmos[1]);
+		        byte[] ciphertext2 = S.sd(retoByte, simetrica, algoritmos[1]);
 				String nombre = toHexString(ciphertext2);
 				cadenas[10] = dlg + REC + nombre + "-continuando";
 				System.out.println(cadenas[10]);
-				
 				/***** Fase 8: Envia hora de registro *****/
 				Calendar rightNow = Calendar.getInstance();
 				int hora = rightNow.get(Calendar.HOUR_OF_DAY);
@@ -263,7 +252,7 @@ public class D extends Thread {
 	          e.printStackTrace();
 	        }
 	}
-	private static synchronized void logTiempoTransaccion(long tiempoResultado) {
+	private  void logTiempoTransaccion(long tiempoResultado) {
 		
 		try {
 			

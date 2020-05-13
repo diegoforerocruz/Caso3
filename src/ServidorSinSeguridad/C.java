@@ -47,6 +47,8 @@ public class C {
 		if (!file2.exists()) {
 			file2.createNewFile();
 		}
+		File file3 = new File("./usoCPU.txt");
+		file3.delete();
 		FileWriter fw2 = new FileWriter(file2);
 		fw2.close();
 		D.init(certSer, keyPairServidor,file, file2);
